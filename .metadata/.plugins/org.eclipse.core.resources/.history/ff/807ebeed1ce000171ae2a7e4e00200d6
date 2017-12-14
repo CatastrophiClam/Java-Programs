@@ -1,0 +1,154 @@
+package ai;
+import java.util.*;
+
+/**
+ * 
+ * @author maxdai
+ *
+ *A modular neural net that can be customized with multiple levels and mutiple layers per level
+ *
+ *
+ */
+public class ModularAI {
+	ArrayList<ArrayList<Layer>> net;
+	BatchManager manager;
+	
+	public ModularAI(int numInputs){
+		net = new ArrayList<ArrayList<Layer>>();
+		manager = new BatchManager();
+		
+		net.add(new ArrayList<Layer>());
+	}
+	
+	/**
+	 * Attaches a new layer to the layer at level, row
+	 * @param level
+	 * @param row
+	 */
+	public void addLayer(int level, int row){
+		
+	}
+	
+	public void train(){
+		
+	}
+	
+	public void next(int[] input){
+		
+	}
+}
+
+abstract class Layer{
+	
+	protected double[] inputs;
+	protected double[] activations;
+	protected double[] errors;
+	protected double[] biases;
+	protected double[][] weights;
+	protected ArrayList<Layer> inputLayers = new ArrayList<Layer>();
+	protected ArrayList<Layer> outputLayers = new ArrayList<Layer>();
+	
+	public void setInputArray(double[] inputs){
+		this.inputs  = inputs;
+	}
+	
+	public void setInputLayer(Layer in){
+		inputLayers.add(in);
+	}
+	
+	public void setOutputLayer(Layer out){
+		outputLayers.add(out);
+	}
+	
+	public double[] getActivations(){
+		return activations;
+	}
+	
+	public double[] getErrors(){
+		return errors;
+	}
+	
+	public abstract void SGD();
+	
+	public abstract void calcErrors();
+	
+}
+
+class inputLayer extends Layer{
+	
+	public inputLayer(int numNodes){
+		activations = new double[numNodes];
+	}
+	
+	public void SGD(){
+		
+	}
+	
+	public void calcErrors(){
+		
+	}
+	
+}
+
+class fullyConnectedLayer extends Layer{
+	
+	public fullyConnectedLayer(int numNodes, int numInputs){
+		activations = new double[numNodes];
+		errors = new double[numNodes];
+		biases = new double[numNodes];
+		weights = new double[numInputs][numNodes];
+	}
+	
+	public void SGD(){
+		
+	}
+	
+}
+
+class convolutionalLayer extends Layer{
+	
+	
+}
+
+class poolingLayer extends Layer{
+	
+	
+}
+
+class softmaxLayer extends Layer{
+	
+	
+}
+
+/**
+ * Prepares, formats and returns input and output batches
+ * @author maxdai
+ *
+ */
+class BatchManager{
+	ArrayList<double[]> inputArray;
+	ArrayList<double[]> outputArray;
+	
+	BatchManager(){
+		inputArray = new ArrayList<double[]>();
+		outputArray = new ArrayList<double[]>();
+	}
+	
+	boolean hasNextBatch(){
+		return true;
+	}
+	
+	ArrayList<double[]> getNextInputs(){
+		return inputArray;
+	}
+	
+	ArrayList<double[]> getNextOutputs(){
+		return outputArray;
+	}
+	
+	//reset batches
+	void reset(){
+		
+	}
+	
+}

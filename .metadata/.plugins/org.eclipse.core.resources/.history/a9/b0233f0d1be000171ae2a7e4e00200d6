@@ -1,0 +1,121 @@
+package ai;
+import java.util.*;
+
+public class ModularAI {
+	ArrayList<ArrayList<Layer>> net = new ArrayList<ArrayList<Layer>>();
+	
+	public ModularAI(){
+		
+	}
+	
+	public void addLayer(int level, int row){
+		
+	}
+	
+	public void train(){
+		
+	}
+	
+	public void next(){
+		
+	}
+}
+
+abstract class Layer{
+	
+	protected double[] inputs;
+	protected double[] activations;
+	protected double[] errors;
+	protected double[] biases;
+	protected double[][] weights;
+	
+	public void setInputArray(double[] inputs){
+		this.inputs  = inputs;
+	}
+	
+	public double[] getActivations(){
+		return activations;
+	}
+	
+	public double[] getErrors(){
+		return errors;
+	}
+	
+	public abstract void SGD();
+	
+}
+
+class inputLayer extends Layer{
+	
+	public inputLayer(int numNodes){
+		activations = new double[numNodes];
+	}
+	
+	public void SGD(){
+		
+	}
+	
+}
+
+class fullyConnectedLayer extends Layer{
+	
+	public fullyConnectedLayer(int numNodes, int numInputs){
+		activations = new double[numNodes];
+		errors = new double[numNodes];
+		biases = new double[numNodes];
+		weights = new double[numInputs][numNodes];
+	}
+	
+	public void SGD(){
+		
+	}
+	
+}
+
+class convolutionalLayer extends Layer{
+	
+	
+}
+
+class poolingLayer extends Layer{
+	
+	
+}
+
+class softmaxLayer extends Layer{
+	
+	
+}
+
+/**
+ * Prepares, formats and returns input and output batches
+ * @author maxdai
+ *
+ */
+class BatchManager{
+	ArrayList<double[]> inputArray;
+	ArrayList<double[]> outputArray;
+	
+	BatchManager(){
+		inputArray = new ArrayList<double[]>();
+		outputArray = new ArrayList<double[]>();
+	}
+	
+	boolean hasNextBatch(){
+		return true;
+	}
+	
+	ArrayList<double[]> getNextInputs(){
+		return inputArray;
+	}
+	
+	ArrayList<double[]> getNextOutputs(){
+		return outputArray;
+	}
+	
+	//reset batches
+	void reset(){
+		
+	}
+	
+}

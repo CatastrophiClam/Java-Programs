@@ -1,0 +1,70 @@
+package ai;
+import java.util.*;
+
+public class ModularAI {
+	ArrayList<ArrayList<Layer>> net = new ArrayList<ArrayList<Layer>>();
+	
+	public ModularAI(){
+		
+	}
+	
+	public void addLayer(){
+		
+	}
+}
+
+class Layer{
+	
+	protected double[] inputs;
+	protected double[] activations;
+	protected double[] errors;
+	protected double[] biases;
+	protected double[][] weights;
+	
+	public Layer(){
+		
+	}
+	
+	public void setInputArray(double[] inputs){
+		this.inputs  = inputs;
+	}
+	
+	public double[] getActivations(){
+		return activations;
+	}
+	
+	public double[] getErrors(){
+		return errors;
+	}
+	
+	public abstract void SGD(){
+		
+	}
+	
+}
+
+class fullyConnectedLayer extends Layer{
+	
+	public fullyConnectedLayer(int numNodes, int numInputs){
+		activations = new double[numNodes];
+		errors = new double[numNodes];
+		biases = new double[numNodes];
+		weights = new double[numInputs][numNodes];
+	}
+	
+}
+
+class convolutionalLayer extends Layer{
+	
+	
+}
+
+class poolingLayer extends Layer{
+	
+	
+}
+
+class softmaxLayer extends Layer{
+	
+	
+}

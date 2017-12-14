@@ -1,0 +1,39 @@
+
+
+/*
+ID: Max
+LANG: JAVA
+TASK: friday
+*/
+
+import java.io.*;
+
+class friday {
+
+	public static void main(String[] args) throws IOException{
+		// TODO Auto-generated method stub
+		BufferedReader reader = new BufferedReader(new FileReader("friday.in"));
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("friday.out")));
+		int n = Integer.parseInt(reader.readLine());
+		int[] dayHits = new int[7]; //dayHits[0] is number of times sunday was the 13th, dayHits[1] is monday... etc.
+		int[] days = {31,28,31,30,31,30,31,31,30,31,30,31}; //number of days in each month
+		int weekday = 0;
+		//for every year
+		for (int i = 0; i < n; i++){
+			//for every month
+			for (int j = 0; j < 12; j++){
+				dayHits[(weekday+13)%7]++;
+				weekday+=days[j];
+				//check and compensate for leap year (February only)
+				if (j==1&&(i+1900)%4==0&& !((i+1900)%100==0&&(i+1900)%400!=0)){
+					weekday++;
+				}
+			}
+		}
+		out.println(dayHits[6]+" "+dayHits[0]+" "+dayHits[1]+" "+dayHits[2]+" "+dayHits[3]+" "+dayHits[4]+" "+dayHits[5]);
+		reader.close();
+		out.close();
+		System.exit(0);
+	}
+
+}

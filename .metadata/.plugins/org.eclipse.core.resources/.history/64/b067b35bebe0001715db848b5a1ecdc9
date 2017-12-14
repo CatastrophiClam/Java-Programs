@@ -1,0 +1,198 @@
+package ai;
+import java.util.*;
+
+
+/**
+ * 
+ * @author maxdai
+ *
+ *A modular neural net that can be customized with multiple levels and mutiple layers per level
+ *
+ *
+ */
+public class ModularAI {
+	ArrayList<ArrayList<Layer>> net;
+	BatchManager manager;
+	
+	enum LayerType{INPUT,OUTPUT,FULLY_CONNECTED,CONVOLUTIONAL,POOLING,SOFTMAX};
+	
+	public ModularAI(int numInputs){
+		net = new ArrayList<ArrayList<Layer>>();
+		manager = new BatchManager();
+		
+		net.add(new ArrayList<Layer>());
+		net.get(0).add(new InputLayer(numInputs));
+	}
+	
+	/**
+	 * Attaches a new layer to the layer at level, row
+	 * @param level
+	 * @param row
+	 * 
+	 * 0 - Input layer
+	 * 1 - Output layer
+	 * 2 - Fully connected layer
+	 * 3 - Convolutional layer
+	 * 4 - Pooling layer
+	 * 5 - Softmax layer
+	 * 
+	 * @return
+	 */
+	public void addLayer(LayerType choice, int length, int cols, int level, int row){
+		//verify if it can be added
+		if (!(net.size()> level && net.get(level).size()> row)){
+			System.out.println("Error. Root layer does not exist");
+			return;
+		}
+		
+		//create layer
+		Layer layer = null;
+		switch(choice){
+		case INPUT:
+			layer = new InputLayer(length);
+			break;
+		case OUTPUT:
+			layer = new OutputLayer(length);
+			break;
+		case FULLY_CONNECTED:
+			layer = new FullyConnectedLayer(length);
+			break;
+		case CONVOLUTIONAL:
+			//layer = new ConvolutionalLayer();
+			break;
+		case POOLING:
+			//layer = new PoolingLayer();
+			break;
+		case SOFTMAX:
+			//layer = new SoftmaxLayer();
+			break;
+		}
+		
+		net.get(level).get(row).addOutputLayer(layer);
+		layer.addInputLayer(net.get(level).get(row));
+	}
+	
+	//for single column layers
+	public void addLayer(LayerType choice, int length, int level, int row){
+		addLayer(choice,length,0,level,row);
+	}
+	
+	public void train(){
+		
+	}
+	
+	public void next(int[] input){
+		
+	}
+}
+
+abstract class Layer{
+	
+	protected double[] activations;
+	protected double[] errors;
+	protected double[] biases;
+	protected double[][] weights;
+	protected ArrayList<Layer> inputLayers = new ArrayList<Layer>();
+	protected ArrayList<Layer> outputLayers = new ArrayList<Layer>();
+	
+	public abstract void addInputLayer(Layer in);
+	
+	public abstract void addOutputLayer(Layer out);
+	
+	public double[] getActivations(){
+		return activations;
+	}
+	
+	public double[] getErrors(){
+		return errors;
+	}
+	
+	public abstract void SGD();
+	
+	public abstract void calcErrors();
+	
+}
+
+class InputLayer extends Layer{
+	
+	public InputLayer(int numNodes){
+		activations = new double[numNodes];
+	}
+	
+	public void setActivations(double[] activations){
+		this.activations = activations;
+	}
+	
+	public void addInputLayer(Layer in){
+		//shouldn't be used
+		System.out.println("Inputlayer.addInputLayer has been called and it's probably not supposed to");
+		return;
+	}
+	
+	public void addOutputLayer(Layer out){
+		outputLayers.add(out);
+	}
+	
+	public void SGD(){
+		//do nothing
+	}
+	
+	public void calcErrors(){
+		//do nothing
+	}
+	
+}
+
+class FullyConnectedLayer extends Layer{
+	
+	public FullyConnectedLayer(int numNodes){
+		activations = new double[numNodes];
+		errors = new double[numNodes];
+		biases = new double[numNodes];
+	}
+	
+	public void SGD(){
+		
+	}
+	
+}
+
+class OutputLayer extends FullyConnectedLayer{
+	
+	public OutputLayer(int numNodes){
+		super(numNodes);
+	}
+}
+
+/**
+ * Prepares, formats and returns input and output batches
+ * @author maxdai
+ *
+ */
+class BatchManager{
+	ArrayList<double[]> inputArray;
+	ArrayList<double[]> outputArray;
+	
+	BatchManager(){
+		inputArray = new ArrayList<double[]>();
+		outputArray = new ArrayList<double[]>();
+	}
+	
+	boolean hasNextBatch(){
+		return true;
+	}
+	
+	ArrayList<double[]> getNextInputs(){
+		return inputArray;
+	}
+	
+	ArrayList<double[]> getNextOutputs(){
+		return outputArray;
+	}
+	
+	//reset batches
+	void reset(){
+		
+	}
+	
+}

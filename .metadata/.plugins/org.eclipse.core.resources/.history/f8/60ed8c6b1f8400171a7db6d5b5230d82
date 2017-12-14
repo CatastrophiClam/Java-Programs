@@ -1,0 +1,13 @@
+package random;
+
+public class PatternInRandom {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String p1 = "1";
+		String p2 = "13";
+		String p3 = "13231";
+		
+	}
+
+}

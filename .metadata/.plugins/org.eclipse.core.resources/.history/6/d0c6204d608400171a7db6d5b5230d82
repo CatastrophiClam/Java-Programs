@@ -1,0 +1,34 @@
+package random;
+import java.util.*;
+
+public class PatternInRandom {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String[] patterns = new String[]{"1","13","13231", "1132312213231", "1323312113231132223132231"};
+		int[] correct = new int[patterns.length];
+		int counter = 0;
+		int maxCount;
+		Scanner scan = new Scanner(System.in);
+		Random rand = new Random();
+		int correctInt;
+		while (true){
+			System.out.println("Enter number of trials: ");
+			maxCount = scan.nextInt();
+			for (counter = 0; counter < maxCount; counter++){
+				correctInt = rand.nextInt(3)+1;
+				for (int i = 0; i < patterns.length; i++){
+					if (Integer.valueOf(patterns[i].substring(counter%patterns[i].length(), counter%patterns[i].length()+1))==correctInt){
+						correct[i]++;
+					}
+				}
+			}
+			for (int i = 0; i < patterns.length; i++){
+				System.out.println(patterns[i]+"   "+(correct[i]+0.0)/counter);
+			}
+			correct = new int[patterns.length];
+		}
+		
+	}
+
+}
